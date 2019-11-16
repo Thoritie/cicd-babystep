@@ -12,7 +12,6 @@ def home():
 def result():
     number = request.form.get('number')
 
-    print(fizzbuzz(number))
     say = fizzbuzz(number)
 
     return render_template(
@@ -22,4 +21,4 @@ def result():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
