@@ -1,0 +1,32 @@
+defaults: &defaults
+  working_directory: ~/cicd-babystep
+  docker:
+      - image: circleci/python:3.6.1
+
+version: 2
+jobs:
+  checkout_code:
+    <<: *defaults
+    steps:
+      - checkout
+      - persist_to_workspace:
+          root: .
+          paths: .
+
+  unit_tests:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Run test
+          command: python fizzbuzztest.py
+
+workflows:
+  version: 2
+  cicd-babystep-pipeline:
+    jobs:
+      - checkout_code
+      - unit_tests:
+          requires:
+            - checkout_code
